@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Bundle & Save</title>
+    <style>
+        body {
+            font-family: sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            background-color: #f0f0f0;
+            margin: 0;
+        }
+
+        .container {
+            background-color: #fff;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            width: 300px;
+        }
+
+        .bundle-title {
+            text-align: center;
+            color: #28a745;
+            margin-bottom: 20px;
+        }
+
+        .bundle-option {
+            border: 1px solid #ccc;
+            border-radius: 6px;
+            padding: 10px;
+            margin-bottom: 10px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+        .bundle-option:hover, .bundle-option.selected {
+            background-color: #e9ecef;
+        }
+
+        .bundle-option input[type="radio"] {
+            margin-right: 10px;
+        }
+
+        .discount {
+            font-weight: bold;
+            color: #dc3545;
+        }
+
+        .most-popular {
+            background-color: #28a745;
+            color: #fff;
+            padding: 5px 10px;
+            border-radius: 4px;
+            font-size: 0.8em;
+        }
+
+        .selection-details {
+            display: none;
+            margin-top: 10px;
+        }
+
+        .selection-details.active {
+            display: block;
+        }
+
+        .selection-details select {
+            margin-right: 10px;
+            padding: 5px;
+            border-radius: 4px;
+            border: 1px solid #ccc;
+        }
+
+        .free-shipping {
+            margin-top: 20px;
+            color: #28a745;
+        }
+
+        .total {
+            margin-top: 10px;
+            font-weight: bold;
+        }
+
+        .add-to-cart {
+            background-color: #28a745;
+            color: #fff;
+            padding: 10px;
+            border: none;
+            border-radius: 6px;
+            cursor: pointer;
+            width: 100%;
+            margin-top: 20px;
+            transition: background-color 0.3s;
+        }
+
+        .add-to-cart:hover {
+            background-color: #1e7e34;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h2 class="bundle-title">Bundle & Save</h2>
+        
+        <div class="bundle-option" onclick="selectBundle('1', 195)">
+            <input type="radio" name="bundle" value="1"> 1 Pair <br/> DKK 195.00 <span class="discount">50% OFF</span>
+        </div>
+        
+        <div class="bundle-option selected" onclick="selectBundle('2', 345)">
+            <input type="radio" name="bundle" value="2" checked> 2 Pair DKK 345.00 <span style="text-decoration: line-through; color: #6c757d; font-size: 0.8em;">DKK 195.00</span> 
+
+            <span class="most-popular">Most Popular</span> <span class="discount">40% OFF</span>
+            <div class="selection-details active" id="details-2">
+                <div>
+                    #1 Size: <select><option>S</option><option>M</option><option>L</option></select> Colour: <select><option>colour</option></select>
+                </div>
+                <div>
+                    #2 Size: <select><option>S</option><option>M</option><option>L</option></select> Colour: <select><option>colour</option></select>
+                </div>
+            </div>
+        </div>
+        
+        <div class="bundle-option" onclick="selectBundle('3', 528)">
+            <input type="radio" name="bundle" value="3"> 3 Pair <br/> DKK 528.00 <span class="discount">60% OFF</span>
+        </div>
+
+        <div class="free-shipping">Free 2 Day Shipping</div>
+        <div class="total">Total: DKK <span id="total-price">360.00</span></div>
+
+        <button class="add-to-cart">+ Add to Cart</button>
+    </div>
+
+    <script>
+        function selectBundle(bundle, price) {
+            document.querySelectorAll('.bundle-option').forEach(option => option.classList.remove('selected'));
+            document.querySelector(`[value="${bundle}"]`).parentNode.classList.add('selected');
+            document.querySelectorAll('.selection-details').forEach(detail => detail.classList.remove('active'));
+            if (document.getElementById(`details-${bundle}`)) {
+                document.getElementById(`details-${bundle}`).classList.add('active');
+            }
+            document.getElementById('total-price').textContent = calculateTotal(price);
+        }
+
+        function calculateTotal(price) {
+            return price * 1.04347826087;
+        }
+    </script>
+</body>
+</html>
